@@ -26,3 +26,11 @@ Then you can make GET and POST requests from your code:
     post.send();
     println("Reponse Content: " + post.getContent());
     println("Reponse Content-Length Header: " + post.getHeader("Content-Length"));
+    
+    // now with headers and json support
+    PostRequest post = new PostRequest("http://httprocessing.heroku.com");
+    post.addHeader("Content-Type", "application/json");
+    post.addJson("{\"items\": [{\"checked\": true, \"text\": \"one\"}, {\"checked\": true, \"text\": \"two\"}]}");
+    post.send();
+    println("Reponse Content: " + post.getContent());
+    println("Reponse Content-Length Header: " + post.getHeader("Content-Length"));

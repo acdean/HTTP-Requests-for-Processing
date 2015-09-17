@@ -104,7 +104,7 @@ public class PostRequest
 			// add json
 			if (json != null) {
 				StringEntity params =new StringEntity(json);
-				httpPost.addHeader("content-type", "application/x-www-form-urlencoded");
+				httpPost.addHeader("content-type", "application/json");
 				httpPost.setEntity(params);
 			}
 

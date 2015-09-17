@@ -77,7 +77,7 @@ public class PostRequest
 			DefaultHttpClient httpClient = new DefaultHttpClient();
 			HttpPost httpPost = new HttpPost(url);
 
-			if (nameFilePairs.isEmpty()) {
+			if (!nameValuePairs.isEmpty()) {
 				httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, encoding));
 			}
 			// add json

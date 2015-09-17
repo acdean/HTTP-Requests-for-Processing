@@ -79,7 +79,15 @@ public class PostRequest
 
 			if (nameFilePairs.isEmpty()) {
 				httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, encoding));
-			} else {
+			}
+			// add json
+			else if (json != null) {
+				StringEntity params =new StringEntity(json);
+				httpPost.addHeader("content-type", "application/json");
+				httpPost.setEntity(params);
+			} 
+			// file handling
+			else if (!nameFilePairs.isEmpty()) {
 				MultipartEntity mentity = new MultipartEntity();	
 				Iterator<Entry<String,File>> it = nameFilePairs.entrySet().iterator();
 			    while (it.hasNext()) {
@@ -99,13 +107,6 @@ public class PostRequest
 				for (Header header : headers) {
 					httpPost.addHeader(header);
 				}
-			}
-
-			// add json
-			if (json != null) {
-				StringEntity params =new StringEntity(json);
-				httpPost.addHeader("content-type", "application/json");
-				httpPost.setEntity(params);
 			}
 
 			response = httpClient.execute( httpPost );

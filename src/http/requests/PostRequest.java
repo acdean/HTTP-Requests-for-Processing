@@ -120,6 +120,8 @@ public class PostRequest
 			// Clear it out for the next time
 			nameValuePairs.clear();
 			nameFilePairs.clear();
+			headers.clear();
+			json = null;
 
 		} catch( Exception e ) { 
 			e.printStackTrace(); 

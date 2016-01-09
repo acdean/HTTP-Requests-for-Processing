@@ -36,9 +36,9 @@ public class PostRequest
 
 	public PostRequest(String url)
 	{
-	  this(url, "ISO-8859-1");
+		this(url, "ISO-8859-1");
 	}
-	
+
 	public PostRequest(String url, String encoding) 
 	{
 		this.url = url;
@@ -66,7 +66,7 @@ public class PostRequest
 		File f = new File(path);
 		nameFilePairs.put(name,f);
 	}
-	
+
 	public void addHeader(String name, String value) {
 		headers.add(new BasicHeader(name, value));
 	}
@@ -88,14 +88,14 @@ public class PostRequest
 			} 
 			// file handling
 			else if (!nameFilePairs.isEmpty()) {
-				MultipartEntity mentity = new MultipartEntity();	
+				MultipartEntity mentity = new MultipartEntity();
 				Iterator<Entry<String,File>> it = nameFilePairs.entrySet().iterator();
-			    while (it.hasNext()) {
-			        Entry<String, File> pair =  it.next();
-			        String name = (String) pair.getKey();
-			        File f = (File) pair.getValue();
+				while (it.hasNext()) {
+					Entry<String, File> pair = it.next();
+					String name = (String) pair.getKey();
+					File f = (File) pair.getValue();
 					mentity.addPart(name, new FileBody(f));
-			    }				
+				}
 				for (NameValuePair nvp : nameValuePairs) {
 					mentity.addPart(nvp.getName(), new StringBody(nvp.getValue()));
 				}
@@ -110,7 +110,7 @@ public class PostRequest
 			}
 
 			response = httpClient.execute( httpPost );
-			HttpEntity   entity   = response.getEntity();
+			HttpEntity entity = response.getEntity();
 			this.content = EntityUtils.toString(response.getEntity());
 
 			if( entity != null ) EntityUtils.consume(entity);

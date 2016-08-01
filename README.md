@@ -5,6 +5,7 @@ HTTP Requests for Processing is a small library that takes the pain out of doing
 
 HTTP Requests for Processing is based on code by [Chris Allick](http://chrisallick.com/) and [Daniel Shiffman](http://www.shiffman.net/).
 
+This fork allows easy posting of json data, see bottom example. This was written in repsonse to this post on the processing forum: https://forum.processing.org/two/discussion/comment/50477
 
 How to
 ------------

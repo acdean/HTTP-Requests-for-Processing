@@ -18,19 +18,43 @@ Then you can make GET and POST requests from your code:
 
     GetRequest get = new GetRequest("http://httprocessing.heroku.com");
     get.send();
-    println("Reponse Content: " + get.getContent());
-    println("Reponse Content-Length Header: " + get.getHeader("Content-Length"));
+    println("Response Content: " + get.getContent());
+    println("Response Content-Length Header: " + get.getHeader("Content-Length"));
     
     PostRequest post = new PostRequest("http://httprocessing.heroku.com");
     post.addData("name", "Rune");
     post.send();
-    println("Reponse Content: " + post.getContent());
-    println("Reponse Content-Length Header: " + post.getHeader("Content-Length"));
+    println("Response Content: " + post.getContent());
+    println("Response Content-Length Header: " + post.getHeader("Content-Length"));
     
+
     // now with headers and json support
     PostRequest post = new PostRequest("http://httprocessing.heroku.com");
-    post.addHeader("Content-Type", "application/json");
+    post.addHeader("acdHeader", "hello world");
     post.addJson("{\"items\": [{\"checked\": true, \"text\": \"one\"}, {\"checked\": true, \"text\": \"two\"}]}");
     post.send();
-    println("Reponse Content: " + post.getContent());
-    println("Reponse Content-Length Header: " + post.getHeader("Content-Length"));
+    println("Response Content: " + post.getContent());
+    println("Response Content-Length Header: " + post.getHeader("Content-Length"));
+
+
+    // now with binary support
+    PostRequest post = new PostRequest("http://httprocessing.heroku.com");
+    byte[] bytes = new byte[10];
+    for (int i = 0 ; i < byte.length ; i++) {
+      bytes[i] = i;
+    }
+    post.addData("application/octet-stream", bytes);
+    post.send();
+    println("Response Content: " + post.getContent());
+    println("Response Content-Length Header: " + post.getHeader("Content-Length"));
+    
+    // or from a file
+    post.addDataFromFile("image/jpeg", "/full/path/to/file.jpg");
+
+
+    // PUT support too
+    PostRequest put = new PostRequest("http://httprocessing.heroku.com", "ISO-8859-1");
+    put.method("PUT");
+    ...
+    put.send();
+    

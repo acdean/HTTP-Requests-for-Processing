@@ -3,7 +3,9 @@ package http.requests;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.util.EntityUtils;
@@ -16,10 +18,15 @@ public class GetRequest
 	String content;
 	HttpResponse response;
 	List<Header> headers;
+	String method;
 
 	public GetRequest(String url) 
 	{
-		this.url = url;
+		this(null, url);
+	}
+	public GetRequest(String method, String url) 
+	{
+		method(method);
 		headers = new ArrayList<Header>(0);
 	}
 
@@ -27,21 +34,33 @@ public class GetRequest
 		headers.add(new BasicHeader(name, value));
 	}
 
+	// only DELETE changes the method
+	public void method(String delete) {
+		if (delete != null && delete.equalsIgnoreCase(delete)) {
+			this.method = delete;
+		}
+	}
+
 	public void send() 
 	{
 		try {
 			DefaultHttpClient httpClient = new DefaultHttpClient();
 
-			HttpGet httpGet = new HttpGet(url);
+			HttpRequestBase httpRequest;
+			if (method != null && method.equalsIgnoreCase("DELETE")) {
+				httpRequest = new HttpDelete(url);
+			} else {
+				httpRequest = new HttpGet(url);
+			}
 
 			// add the headers to the request
 			if (!headers.isEmpty()) {
 				for (Header header : headers) {
-					httpGet.addHeader(header);
+					httpRequest.addHeader(header);
 				}
 			}
 
-			response = httpClient.execute( httpGet );
+			response = httpClient.execute( httpRequest );
 			HttpEntity entity = response.getEntity();
 			this.content = EntityUtils.toString(response.getEntity());
 			
